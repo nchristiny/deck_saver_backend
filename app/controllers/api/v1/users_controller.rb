@@ -38,9 +38,10 @@ module Api::V1
     end
 
     # DELETE /v1/users/1
-    def destroy
-      @user.destroy
-    end
+ def destroy
+   @user.destroy
+   head 204
+ end
 
     private
       # Use callbacks to share common setup or constraints between actions.

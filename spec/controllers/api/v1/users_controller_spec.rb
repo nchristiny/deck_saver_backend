@@ -131,6 +131,17 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
         it { should respond_with 422 }
       end
     end
+
+    describe "DELETE #destroy" do
+      before(:each) do
+        @user = FactoryGirl.create :user
+        process :destroy, method: :delete, params: { id: @user.id }, format: :json
+      end
+
+      it { should respond_with 204 }
+
+    end
+
     #   p "#{:user}"
     #   user = User.create! valid_attributes
     #   get :index, {}, valid_session
