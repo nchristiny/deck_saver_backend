@@ -31,9 +31,9 @@ module Api::V1
     # PATCH/PUT /v1/users/1
     def update
       if @user.update(user_params)
-        render json: @user
+        render json: @user, status: 200, location: [:api, @user]
       else
-        render json: @user.errors, status: :unprocessable_entity
+        render json: { errors: @user.errors }, status: 422
       end
     end
 
