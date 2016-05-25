@@ -9,6 +9,8 @@ gem 'pg'
 gem 'puma', '~> 3.0'
 # Active Model Serializers
 gem 'active_model_serializers'
+# API rate limiting and throttling
+gem 'rack-attack'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
