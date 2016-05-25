@@ -41,7 +41,6 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
 
       it "returns the information about a user" do
         user_response = json_response
-        p user_response
         expect(user_response[:user][:email]).to eql @user.email
       end
 
