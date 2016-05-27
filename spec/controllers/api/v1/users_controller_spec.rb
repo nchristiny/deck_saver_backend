@@ -36,6 +36,7 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
     context "when is successfully found" do
       before(:each) do
         @user = FactoryGirl.create :user
+        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         get :show, params: { id: @user.id }
       end
 
@@ -52,6 +53,8 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
 
     context "when is successfully created" do
       before(:each) do
+        @user = FactoryGirl.create :user
+        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         @user_attributes = FactoryGirl.attributes_for :user
         process :create, method: :post, params: { user: @user_attributes }, format: :json
       end
@@ -65,6 +68,8 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
 
     context "when is not created" do
       before(:each) do
+        @user = FactoryGirl.create :user
+        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         @invalid_user_attributes = { bad_attribute: "No" }
         process :create, method: :post, params: { user: @invalid_user_attributes }, format: :json
       end
@@ -87,6 +92,7 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
     context "when is successfully updated" do
       before(:each) do
         @user = FactoryGirl.create :user
+        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         process :update, method: :post, params: { id: @user.id, user: { email: "newmail@example.com" } }, format: :json
       end
 
@@ -100,6 +106,7 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
     context "when is not updated" do
       before(:each) do
         @user = FactoryGirl.create :user
+        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         process :update, method: :post, params: { id: @user.id, user: { email: '' } }, format: :json
       end
 
@@ -119,6 +126,7 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
   describe "DELETE #destroy" do
     before(:each) do
       @user = FactoryGirl.create :user
+        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
       process :destroy, method: :delete, params: { id: @user.id }, format: :json
     end
     it { should respond_with 204 }

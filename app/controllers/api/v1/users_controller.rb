@@ -2,7 +2,7 @@ module Api::V1
   class UsersController < ApiController
   include ActionController::HttpAuthentication::Token::ControllerMethods
   before_action :set_user, only: [:show, :update, :destroy]
-  # before_action :authenticate, only: [:create, :update, :destroy]
+  before_action :authenticate, only: [:show, :create, :update, :destroy]
 
     # GET /v1/users
     def index
