@@ -1,6 +1,8 @@
 module Api::V1
   class UsersController < ApiController
+  include ActionController::HttpAuthentication::Token::ControllerMethods
   before_action :set_user, only: [:show, :update, :destroy]
+  before_action :authenticate, only: [:show, :create, :update, :destroy]
 
     # GET /v1/users
     def index
@@ -14,7 +16,6 @@ module Api::V1
 
     # GET /v1/users/new
     def new
-      @user = User.new
     end
 
     # POST /v1/users
@@ -38,21 +39,37 @@ module Api::V1
     end
 
     # DELETE /v1/users/1
- def destroy
-   @user.destroy
-   head 204
- end
+     def destroy
+       @user.destroy
+       head 204
+     end
+
+     protected
+
+     # Authenticate the user with token based authentication
+     def authenticate
+       authenticate_token || render_unauthorized
+     end
+
+     def authenticate_token
+       authenticate_with_http_token do |token, options|
+         @current_user = User.find_by(api_key: token)
+       end
+     end
+
+     def render_unauthorized(realm = "Application")
+       self.headers["WWW-Authenticate"] = %(Token realm="#{realm.gsub(/"/, "")}")
+       render json: 'Bad credentials', status: :unauthorized
+     end
 
     private
-      # Use callbacks to share common setup or constraints between actions.
       def set_user
         @user = User.find(params[:id])
         head 404 and return unless @user.present?
       end
 
-      # Only allow a trusted parameter "white list" through.
       def user_params
-        params.require(:user).permit(:name, :email)
+        params.require(:user).permit(:name, :email, :password, :api_key)
       end
   end
 end
