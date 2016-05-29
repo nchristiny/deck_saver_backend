@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # Rails 5 --api --edge
 gem 'rails', github: "rails/rails"
