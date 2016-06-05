@@ -1,26 +1,32 @@
 require 'ffaker'
 require 'json'
 
-## CARDS
-
-card_array = File.readlines("lib/assets/reward.json").each {|line| line.chomp!}
-
-card_array.each do |card|
-  card_json = JSON.parse(card)
-  Card.create!(card_json)
-  p "********************************************************************************"
-end
-cards = Card.all
-p "There are #{cards.count} cards in the database presently."
-
 ## USERS
+2.times do
+  user = User.create!({ name: FFaker::Internet.user_name, email: FFaker::Internet.disposable_email, password: FFaker::Internet.password })
+  p "Created user: " + user.id.to_s + " - " + user.name + " - " + user.email + " - " + user.api_key
+end
 
-# 5.times do
-#   user = User.create!({ name: FFaker::Internet.user_name, email: FFaker::Internet.disposable_email, password: FFaker::Internet.password })
-#   p "Created user: " + user.id.to_s + " - " + user.name + " - " + user.email + " - " + user.api_key
-# end
+## DECKS
+Deck.create!({ title: "Default", user_id: 1 })
 
-# cURL commands
-# Get user page
-# curl -i -H "Authorization: Token token=Iqw9edeJZDruoomO8ls9Owtt" http://localhost:3000/users/1
+## CARDS
+directory_array = ["lib/assets/cards/basic.json", "lib/assets/cards/blackrock_mountain.json", "lib/assets/cards/classic.json", "lib/assets/cards/goblins_vs_gnomes.json", "lib/assets/cards/naxxramas.json", "lib/assets/cards/promotion.json", "lib/assets/cards/reward.json", "lib/assets/cards/the_grand_tournament.json", "lib/assets/cards/the_league_of_explorers.json", "lib/assets/cards/whispers_of_the_old_gods.json"]
 
+directory_array.each do |dir|
+  puts "***********************************************************************"
+  puts "Working with #{dir}"
+  puts "***********************************************************************"
+  card_array = File.readlines(dir).each { |line| line.chomp! }
+  card_array.each do |card|
+    card_hash = ActiveSupport::JSON.decode(card)
+    card_hash["deck_id"] = 1
+    Card.create!(card_hash)
+    puts "Added card: #{card_hash["name"]}"
+  end
+end
+
+cards = Card.all
+decks = Deck.all
+users = User.all
+puts "Seed complete: #{users.count} users, #{decks.count} deck, #{cards.count} cards"
