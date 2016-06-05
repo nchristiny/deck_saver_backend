@@ -10,11 +10,16 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.integer :cost
       t.integer :attack
       t.integer :health
+      t.integer :durability
       t.string :text
+      t.string :inPlayText
       t.string :flavor
       t.string :artist
       t.boolean :collectible
+      t.boolean :elite
       t.string :race
+      t.string :playerClass
+      t.string :howToGet
       t.string :howToGetGold
       t.string :img
       t.string :imgGold

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :card do
-    cardId "MyString"
-    name "MyString"
+    cardId "MyCardId"
+    name "MyName"
   end
 end

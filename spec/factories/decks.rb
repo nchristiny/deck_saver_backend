@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :deck do
-    title "MyString"
+    title "MyTitle"
   end
 end
