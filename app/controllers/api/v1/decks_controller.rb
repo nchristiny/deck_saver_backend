@@ -10,6 +10,12 @@ module Api::V1
       render json: @deck
     end
 
+    def new
+    end
+
+    def create
+    end
+
     private
       def set_deck
         @deck = Deck.find(params[:id])
