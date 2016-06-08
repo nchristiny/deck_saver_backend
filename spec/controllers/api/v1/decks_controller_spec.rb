@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe DecksController, type: :controller do
-
+RSpec.describe Api::V1::DecksController, type: :controller do
+  pending "add some examples to (or delete) #{__FILE__}"
 end
