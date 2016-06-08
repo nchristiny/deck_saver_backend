@@ -10,9 +10,6 @@ module Api::V1
       render json: @deck
     end
 
-    def new
-    end
-
     def create
     end
 

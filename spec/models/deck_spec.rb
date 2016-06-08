@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Deck, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before(:each) do
+    @user = FactoryGirl.create(:user)
+    @deck = FactoryGirl.build(:deck, user_id: @user[:id])
+  end
+  subject { @deck }
+
+  it { should validate_presence_of(:title) }
+  it { should validate_uniqueness_of(:title) }
+  it { should be_valid }
 end

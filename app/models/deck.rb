@@ -2,5 +2,5 @@ class Deck < ApplicationRecord
   belongs_to :user
   has_many :cards
 
-  validates :title, uniqueness: true
+  validates :title, uniqueness: true, presence: true
 end

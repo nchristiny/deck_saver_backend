@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Api::V1::DecksController, type: :controller do
   describe "GET #index" do
     random_number = 2 + rand(10)
-    counter = 0
     before(:each) do
+      counter = 0
       user = FactoryGirl.create(:user)
       random_number.times do
         FactoryGirl.create(:deck, title: "test_deck#{counter}", user_id: user[:id])
@@ -34,13 +34,22 @@ RSpec.describe Api::V1::DecksController, type: :controller do
     end
 
     it 'responds with the correct deck in JSON format' do
-      deck_response = json_response
-      expect(deck_response[:deck][:title]).to eq "Generic but unique Title"
+      expect(json_response[:deck][:title]).to eq "Generic but unique Title"
     end
 
     it 'responds successfully with an HTTP 200 status code' do
       expect(response).to be_success
       expect(response).to have_http_status(200)
+    end
+  end
+
+  describe "POST #create" do
+    context "with valid attributes" do
+      pending  "creates a new deck"
+    end
+
+    context "with invalid attributes" do
+      pending  "does not create a new deck"
     end
   end
 end

@@ -31,7 +31,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
-
+  # TODO DRY the controller.request.env header request
   describe "GET #show" do
     context "when is successfully found" do
       before(:each) do
