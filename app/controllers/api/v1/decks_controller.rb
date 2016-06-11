@@ -11,12 +11,22 @@ module Api::V1
     end
 
     def create
+      deck = Deck.new(deck_params)
+      if deck.save
+        render json: deck, status: 201, location: [:api, deck]
+      else
+        render json: { errors: deck.errors }, status: 422
+      end
     end
 
     private
       def set_deck
         @deck = Deck.find(params[:id])
         head 404 and return unless @deck.present?
+      end
+
+      def deck_params
+        params.require(:deck).permit(:title)
       end
   end
 end

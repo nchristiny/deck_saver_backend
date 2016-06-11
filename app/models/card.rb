@@ -1,5 +1,6 @@
 class Card < ApplicationRecord
-  belongs_to :deck
+  has_many :users, through: :savedcards
+  has_many :decks, through: :deckcards
 
   validates :cardId, uniqueness: true, presence: true
 
