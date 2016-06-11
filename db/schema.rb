@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20160611165225) do
     t.index ["deck_id"], name: "index_cards_on_deck_id", using: :btree
   end
 
-  create_table "deckcards", force: :cascade do |t|
+  create_table "deck_cards", force: :cascade do |t|
     t.integer  "deck_id"
     t.integer  "card_id"
     t.datetime "created_at", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20160611165225) do
     t.index ["user_id"], name: "index_decks_on_user_id", using: :btree
   end
 
-  create_table "savedcards", force: :cascade do |t|
+  create_table "saved_cards", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "card_id"
     t.datetime "created_at", null: false

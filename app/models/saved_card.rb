@@ -1,4 +1,4 @@
-class Savedcard < ApplicationRecord
+class SavedCard < ApplicationRecord
   validates :card_id, presence: true
   validates :user_id, presence: true
 

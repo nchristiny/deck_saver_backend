@@ -1,8 +1,8 @@
 class Card < ApplicationRecord
   validates :cardId, uniqueness: true, presence: true
 
-  has_many :users, through: :savedcards
-  has_many :decks, through: :deckcards
+  has_many :users, through: :saved_cards
+  has_many :decks, through: :deck_cards
 
   # disable STI
   self.inheritance_column = :_type_disabled

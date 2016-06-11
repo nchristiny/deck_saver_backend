@@ -1,4 +1,4 @@
-class Deckcard < ApplicationRecord
+class DeckCard < ApplicationRecord
   validates :card_id, presence: true
   validates :deck_id, presence: true
 
