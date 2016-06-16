@@ -32,5 +32,22 @@ RSpec.describe User, :type => :model do
     end
   end
 
+  it { should have_many(:decks) }
+
+  describe "#decks association" do
+    before do
+      @user.save
+      3.times { FactoryGirl.create :deck, user: @user }
+    end
+
+    it "destroys the associated decks on self destruct" do
+      decks = @user.decks
+      @user.destroy
+      decks.each do |deck|
+        expect(Deck.find(deck)).to raise_error ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
   it { should be_valid }
 end

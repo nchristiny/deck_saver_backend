@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password, on: :create
   validates :api_key, uniqueness: true
 
-  has_many :decks
+  has_many :decks, dependent: :destroy
   has_many :cards, through: :saved_cards
   has_secure_password
   has_secure_token :api_key
