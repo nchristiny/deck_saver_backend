@@ -7,8 +7,12 @@ module Authenticable
     @current_user ||= User.find_by(api_key: request.headers['Authorization'])
   end
 
+  def authenticate_with_token!
+    render json: { errors: "Not authenticated" }, status: :unauthorized unless logged_in?
+  end
+
   def logged_in?
-    !current_user.nil?
+    current_user.present?
   end
 
   def log_out
