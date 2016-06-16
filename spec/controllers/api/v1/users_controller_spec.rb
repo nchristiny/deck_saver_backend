@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
   before(:each) { request.headers['Accept'] = "application/vnd.deck_saver_backend.v1" }
+  before(:each) { request.headers['Content-Type'] = Mime[:json].to_s }
 
   describe "GET #index" do
     number_of_users = 2 + rand(10)
@@ -56,7 +57,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         @user = FactoryGirl.create :user
         controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         @user_attributes = FactoryGirl.attributes_for :user
-        process :create, method: :post, params: { user: @user_attributes }, format: :json
+        process :create, method: :post, params: { user: @user_attributes }
       end
 
       it "renders the json representation for the user record just created" do
@@ -71,7 +72,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         @user = FactoryGirl.create :user
         controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
         @invalid_user_attributes = { bad_attribute: "No" }
-        process :create, method: :post, params: { user: @invalid_user_attributes }, format: :json
+        process :create, method: :post, params: { user: @invalid_user_attributes }
       end
 
       it "renders an errors json" do
@@ -93,7 +94,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       before(:each) do
         @user = FactoryGirl.create :user
         controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
-        process :update, method: :post, params: { id: @user.id, user: { email: "newmail@example.com" } }, format: :json
+        process :update, method: :post, params: { id: @user.id, user: { email: "newmail@example.com" } }
       end
 
       it "renders the json representation for the updated user" do
@@ -107,7 +108,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       before(:each) do
         @user = FactoryGirl.create :user
         controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
-        process :update, method: :post, params: { id: @user.id, user: { email: '' } }, format: :json
+        process :update, method: :post, params: { id: @user.id, user: { email: '' } }
       end
 
       it "renders an errors json" do
@@ -127,7 +128,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     before(:each) do
       @user = FactoryGirl.create :user
       controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
-      process :destroy, method: :delete, params: { id: @user.id }, format: :json
+      process :destroy, method: :delete, params: { id: @user.id }
     end
     it { should respond_with 204 }
   end

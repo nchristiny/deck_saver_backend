@@ -9,7 +9,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
     context "when the credentials are correct" do
       before(:each) do
         credentials = { name: @user.name, email: @user.email, password: "12345678" }
-        process :create, method: :post, params: { session: credentials }, format: :json
+        process :create, method: :post, params: { session: credentials }
       end
 
       it "returns the user record corresponding to the given credentials" do
@@ -23,7 +23,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
     context "when the credentials are incorrect" do
       before(:each) do
         credentials = { email: @user.email, password: "invalidpassword" }
-        process :create, method: :post, params: { session: credentials }, format: :json
+        process :create, method: :post, params: { session: credentials }
       end
 
       it "returns a json with an error" do
