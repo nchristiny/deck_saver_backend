@@ -35,12 +35,10 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
-  # TODO DRY the controller.request.env header request
+
   describe "GET #show" do
     context "when is successfully found" do
       before(:each) do
-
-
         get :show, params: { id: @user.id }
       end
 
@@ -54,11 +52,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe "POST #create" do
-
     context "when is successfully created" do
       before(:each) do
-
-
         @user_attributes = FactoryGirl.attributes_for :user
         process :create, method: :post, params: { user: @user_attributes }
       end
@@ -72,8 +67,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "when is not created" do
       before(:each) do
-
-
         @invalid_user_attributes = { bad_attribute: "No" }
         process :create, method: :post, params: { user: @invalid_user_attributes }
       end
@@ -92,11 +85,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe "PUT/PATCH #update" do
-
     context "when is successfully updated" do
       before(:each) do
-
-
         process :update, method: :post, params: { id: @user.id, user: { email: "newmail@example.com" } }
       end
 
@@ -109,8 +99,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "when is not updated" do
       before(:each) do
-
-
         process :update, method: :post, params: { id: @user.id, user: { email: '' } }
       end
 
@@ -129,8 +117,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   describe "DELETE #destroy" do
     before(:each) do
-
-
       process :destroy, method: :delete, params: { id: @user.id }
     end
     it { should respond_with 204 }
