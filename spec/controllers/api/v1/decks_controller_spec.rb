@@ -5,9 +5,8 @@ RSpec.describe Api::V1::DecksController, type: :controller do
     random_number = 2 + rand(10)
     before(:each) do
       counter = 0
-      user = FactoryGirl.create(:user)
       random_number.times do
-        FactoryGirl.create(:deck, title: "test_deck#{counter}", user_id: user[:id])
+        FactoryGirl.create(:deck, title: "test_deck#{counter}")
         counter += 1
       end
       get :index
@@ -27,8 +26,7 @@ RSpec.describe Api::V1::DecksController, type: :controller do
   end
 
   describe "GET #show" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:deck) { FactoryGirl.create(:deck, title: "Generic but unique Title", user_id: user[:id]) }
+    let(:deck) { FactoryGirl.create(:deck, title: "Generic but unique Title") }
     before(:each) do
       get :show, params: { id: deck.id }
     end
@@ -45,11 +43,15 @@ RSpec.describe Api::V1::DecksController, type: :controller do
 
   describe "POST #create" do
     context "with valid attributes" do
-      pending  "creates a new deck"
+      xit  "creates a new deck" do
+
+      end
     end
 
     context "with invalid attributes" do
-      pending  "does not create a new deck"
+      xit  "does not create a new deck" do
+
+      end
     end
   end
 end
