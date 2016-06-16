@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
-  before(:each) { request.headers['Accept'] = "application/vnd.deck_saver_backend.v1" }
-  before(:each) { request.headers['Content-Type'] = Mime[:json].to_s }
+  before(:each) do
+    @user = FactoryGirl.create :user
+    controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+  end
 
   describe "GET #index" do
     number_of_users = 2 + rand(10)
@@ -16,7 +18,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'all users' do
       it 'returns all the users' do
         users = User.all
-        expect(users.count).to be number_of_users
+        # Account for extra user created in previous before block
+        expect(users.count).to be (number_of_users + 1)
       end
 
       it 'responds successfully with an HTTP 200 status code' do
@@ -27,7 +30,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       describe 'Total number of users' do
         subject { assigns(:users) }
         it "should be #{number_of_users}" do
-          expect(User.all.size).to eq number_of_users
+          expect(User.all.size).to eq (number_of_users + 1)
         end
       end
     end
@@ -36,8 +39,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   describe "GET #show" do
     context "when is successfully found" do
       before(:each) do
-        @user = FactoryGirl.create :user
-        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+
+
         get :show, params: { id: @user.id }
       end
 
@@ -54,8 +57,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "when is successfully created" do
       before(:each) do
-        @user = FactoryGirl.create :user
-        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+
+
         @user_attributes = FactoryGirl.attributes_for :user
         process :create, method: :post, params: { user: @user_attributes }
       end
@@ -69,8 +72,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "when is not created" do
       before(:each) do
-        @user = FactoryGirl.create :user
-        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+
+
         @invalid_user_attributes = { bad_attribute: "No" }
         process :create, method: :post, params: { user: @invalid_user_attributes }
       end
@@ -92,8 +95,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "when is successfully updated" do
       before(:each) do
-        @user = FactoryGirl.create :user
-        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+
+
         process :update, method: :post, params: { id: @user.id, user: { email: "newmail@example.com" } }
       end
 
@@ -106,8 +109,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     context "when is not updated" do
       before(:each) do
-        @user = FactoryGirl.create :user
-        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+
+
         process :update, method: :post, params: { id: @user.id, user: { email: '' } }
       end
 
@@ -126,8 +129,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   describe "DELETE #destroy" do
     before(:each) do
-      @user = FactoryGirl.create :user
-      controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+
+
       process :destroy, method: :delete, params: { id: @user.id }
     end
     it { should respond_with 204 }

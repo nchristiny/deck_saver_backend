@@ -11,6 +11,7 @@ module Api::V1
         user.reload
         log_in(user)
         token = user.api_key
+        user.save
         render json: { :user => user, :api_key => token }, status: 201, location: [:api, user]
       else
         handle_authentication_failure
