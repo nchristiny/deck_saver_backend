@@ -4,11 +4,10 @@ module Api::V1
       handle_authentication_failure and return unless params[:session].present?
       email = params[:session][:email]
       password = params[:session][:password]
-      user = User.find_by_email(email)
+      user = User.find_by(email: email)
 
       if user.present? && user.authenticate(password)
         user.reload
-        user.save
         token = user.api_key
         render :json => { :user => user, :api_key => token },
         :status => 201
@@ -24,7 +23,7 @@ module Api::V1
     private
 
       def handle_authentication_failure
-        head 401
+        render json: { errors: "Invalid email or password" }, status: 401
       end
   end
 end

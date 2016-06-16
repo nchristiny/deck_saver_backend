@@ -69,7 +69,7 @@ module Api::V1
       end
 
       def user_params
-        params.require(:user).permit(:name, :email, :password, :api_key)
+        params.require(:user).permit(:name, :email, :password)
       end
   end
 end
