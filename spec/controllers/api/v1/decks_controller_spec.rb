@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::DecksController, type: :controller do
+  before(:each) do
+    @user = FactoryGirl.create :user
+    api_authorization_header @user.api_key
+    allow(controller).to receive(:current_user).and_return(@user)
+  end
+
   describe "GET #index" do
     random_number = 2 + rand(10)
     before(:each) do
@@ -42,16 +48,84 @@ RSpec.describe Api::V1::DecksController, type: :controller do
   end
 
   describe "POST #create" do
-    context "with valid attributes" do
-      xit  "creates a new deck" do
-
+    context "when is successfully created" do
+      before(:each) do
+        @deck_attributes = FactoryGirl.attributes_for :deck
+        process :create, method: :post, params: { user_id: @user.id, deck: @deck_attributes }
       end
+
+      it "renders the json representation for the deck record just created" do
+        deck_response = json_response
+        expect(deck_response[:deck][:title]).to eql @deck_attributes[:title]
+      end
+
+      it { should respond_with 201 }
     end
 
-    context "with invalid attributes" do
-      xit  "does not create a new deck" do
-
+    context "when is not created" do
+      before(:each) do
+        @invalid_deck_attributes = { bad_attribute: "bad" }
+        process :create, method: :post, params: { user_id: @user.id, deck: @invalid_deck_attributes }
       end
+
+      it "renders an errors json" do
+        deck_response = json_response
+        expect(deck_response).to have_key(:errors)
+      end
+
+      it "renders the json errors with a reason why the user could not be created" do
+        deck_response = json_response
+        expect(deck_response[:errors][:title]).to include "can't be blank"
+      end
+
+      it { should respond_with 422 }
     end
   end
+
+  describe "PUT/PATCH #update" do
+    before(:each) do
+      @deck = FactoryGirl.create :deck, user: @user
+    end
+
+    context "when is successfully updated" do
+      before(:each) do
+        process :update, method: :put, params: { user_id: @user.id, id: @deck.id, deck: { title: "An expensive TV" } }
+      end
+
+      it "renders the json representation for the updated user" do
+        deck_response = json_response[:deck]
+        expect(deck_response[:title]).to eql "An expensive TV"
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context "when is not updated" do
+      before(:each) do
+        process :update, method: :put, params: { user_id: @user.id, id: @deck.id, deck: { title: "" } }
+      end
+
+      it "renders an errors json" do
+        deck_response = json_response
+        expect(deck_response).to have_key(:errors)
+      end
+
+      it "renders the json errors describing the reason the record could not be updated" do
+        deck_response = json_response
+        expect(deck_response[:errors][:title]).to include "can't be blank"
+      end
+
+      it { should respond_with 422 }
+    end
+  end
+
+  describe "DELETE #destroy" do
+    before(:each) do
+      @deck = FactoryGirl.create :deck, user: @user
+      process :destroy, method: :delete, params: { user_id: @user.id, id: @deck.id }
+    end
+
+    it { should respond_with 204 }
+  end
+
 end
