@@ -36,13 +36,15 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
   describe "DELETE #destroy" do
     before(:each) do
-      @user = FactoryGirl.create :user
+      @user = FactoryGirl.create :user, password: "12345678"
+      log_in(@user)
+      process :destroy, method: :delete, params: { id: @user.id }
     end
 
     it "should log the user out of session" do
-      log_in(@user)
-      log_out
       expect(session[:user_id]).to be(nil)
     end
+
+    it { should respond_with 204 }
   end
 end
