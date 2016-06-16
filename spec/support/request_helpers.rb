@@ -6,6 +6,10 @@ module Request
   end
 
   module HeadersHelpers
+    def api_authorization_header(token)
+      controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials(token)
+    end
+
     def api_header(version = 1)
       request.headers['Accept'] = "application/vnd.deck_saver_backend.v#{version}"
     end

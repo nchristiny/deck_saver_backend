@@ -3,12 +3,13 @@ require 'rails_helper'
 RSpec.describe Api::V1::UsersController, type: :controller do
   before(:each) do
     @user = FactoryGirl.create :user
-    controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+    api_authorization_header @user.api_key
   end
 
   describe "GET #index" do
     number_of_users = 2 + rand(10)
     before(:each) do
+      # Add mulitple users
       number_of_users.times do
         FactoryGirl.create(:user)
       end
@@ -18,7 +19,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     context 'all users' do
       it 'returns all the users' do
         users = User.all
-        # Account for extra user created in previous before block
         expect(users.count).to be (number_of_users + 1)
       end
 
@@ -29,7 +29,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       describe 'Total number of users' do
         subject { assigns(:users) }
-        it "should be #{number_of_users}" do
+        it "should be #{number_of_users + 1}" do
           expect(User.all.size).to eq (number_of_users + 1)
         end
       end

@@ -11,9 +11,7 @@ describe Authenticable do
   describe "#current_user" do
     before do
       @user = FactoryGirl.create :user
-      request.headers["Authorization"] = @user.api_key
-      # Deprecated notation
-      # authentication.stub(:request).and_return(request)
+      api_authorization_header(@user.api_key)
       allow(authentication).to receive(:current_user).and_return(@user)
     end
     it "returns the user from the authorization header" do
