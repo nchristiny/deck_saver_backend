@@ -14,14 +14,15 @@ RSpec.describe User, :type => :model do
 
   describe "#generate_api_key" do
     it "generates a token" do
-      generated_token = @user.api_key
-      expect(@user.api_key).to eql generated_token
+      allow(@user).to receive(:api_key).and_return("auniquetoken123")
+      @user.generate_api_key
+      expect(@user.api_key).to eql "auniquetoken123"
     end
 
     it "regenerates a new token" do
-      api_key = @user.api_key
+      original_api_key = @user.api_key
       @user.regenerate_api_key
-      expect(@user.api_key).not_to eql api_key
+      expect(@user.api_key).not_to eql original_api_key
     end
 
     it "generates another token when one already has been taken" do
