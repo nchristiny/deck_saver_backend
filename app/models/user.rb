@@ -1,13 +1,12 @@
 class User < ActiveRecord::Base
-  has_many :decks
-  has_many :cards, through: :deck
-
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, uniqueness: true, presence: true, length: { maximum: 254 }, format: { with: VALID_EMAIL_REGEX }
   validates_presence_of :password, on: :create
   validates :api_key, uniqueness: true
 
+  has_many :decks
+  has_many :cards, through: :saved_cards
   has_secure_password
   has_secure_token :api_key
 

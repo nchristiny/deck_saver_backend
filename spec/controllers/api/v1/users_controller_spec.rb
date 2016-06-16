@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::UsersController, :type => :controller do
+RSpec.describe Api::V1::UsersController, type: :controller do
   before(:each) { request.headers['Accept'] = "application/vnd.deck_saver_backend.v1" }
 
   describe "GET #index" do
@@ -31,7 +31,7 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
       end
     end
   end
-
+  # TODO DRY the controller.request.env header request
   describe "GET #show" do
     context "when is successfully found" do
       before(:each) do
@@ -126,7 +126,7 @@ RSpec.describe Api::V1::UsersController, :type => :controller do
   describe "DELETE #destroy" do
     before(:each) do
       @user = FactoryGirl.create :user
-        controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
+      controller.request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Token.encode_credentials("#{@user.api_key}")
       process :destroy, method: :delete, params: { id: @user.id }, format: :json
     end
     it { should respond_with 204 }
