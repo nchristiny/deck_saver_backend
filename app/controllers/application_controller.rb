@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::Serialization
+  include Authenticable
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 

@@ -1,6 +1,5 @@
 module Api::V1
   class SessionsController < ApiController
-    include SessionsConcern
     def create
       handle_authentication_failure and return unless params[:session].present?
       email = params[:session][:email]
@@ -10,9 +9,8 @@ module Api::V1
       if user.present? && user.authenticate(password)
         user.reload
         log_in(user)
-        token = user.api_key
         user.save
-        render json: { :user => user, :api_key => token }, status: 201, location: [:api, user]
+        render json: { :user => user, :api_key => user.api_key }, status: 201, location: [:api, user]
       else
         handle_authentication_failure
       end
