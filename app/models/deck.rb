@@ -3,6 +3,7 @@ class Deck < ApplicationRecord
 
   belongs_to :user
   has_many :cards, through: :deck_cards
+  has_many :deck_cards
 
   # REFACTOR THIS
   # # Deck.new.build_deck
