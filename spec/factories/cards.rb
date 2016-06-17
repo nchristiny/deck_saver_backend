@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :card do
-    cardId "MyCardId"
-    name "MyName"
+    cardId { FFaker::Food.vegetable }
+    name { FFaker::Name.first_name }
   end
 end

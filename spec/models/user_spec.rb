@@ -11,6 +11,7 @@ RSpec.describe User, :type => :model do
 
   it { should respond_to(:api_key) }
   it { should validate_uniqueness_of(:api_key)}
+  it { should have_many(:decks) }
 
   describe "#generate_api_key" do
     it "generates a token" do
@@ -31,8 +32,6 @@ RSpec.describe User, :type => :model do
       expect(@user.api_key).not_to eql existing_user.api_key
     end
   end
-
-  it { should have_many(:decks) }
 
   describe "#decks association" do
     before do

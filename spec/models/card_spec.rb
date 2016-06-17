@@ -10,5 +10,7 @@ RSpec.describe Card, type: :model do
 
   it { should validate_presence_of(:cardId) }
   it { should validate_uniqueness_of(:cardId) }
+  it { should }
+
   it { should be_valid }
 end
