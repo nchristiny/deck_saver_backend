@@ -37,6 +37,7 @@ group :development, :test do
   end
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
+  gem 'ffaker'
 end
 
 group :development do
@@ -48,7 +49,6 @@ end
 
 group :test do
   gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', require: false
-  gem 'ffaker'
   gem 'rspec-activemodel-mocks'
 end
 
