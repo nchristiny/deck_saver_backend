@@ -115,8 +115,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    active_model_serializers (0.9.4)
-      activemodel (>= 3.2)
+    active_model_serializers (0.8.3)
+      activemodel (>= 3.0)
     addressable (2.3.8)
     arel (7.0.0)
     bcrypt (3.1.11)
@@ -211,7 +211,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers
+  active_model_serializers (= 0.8.3)
   bcrypt (~> 3.1.7)
   byebug
   dotenv-rails

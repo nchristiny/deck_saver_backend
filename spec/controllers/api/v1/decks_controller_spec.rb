@@ -8,10 +8,10 @@ RSpec.describe Api::V1::DecksController, type: :controller do
   end
 
   describe "GET #index" do
-    random_number = 2 + rand(10)
+    number_of_decks = 2 + rand(10)
     before(:each) do
       counter = 0
-      random_number.times do
+      number_of_decks.times do
         FactoryGirl.create(:deck, title: "test_deck#{counter}")
         counter += 1
       end
@@ -21,7 +21,7 @@ RSpec.describe Api::V1::DecksController, type: :controller do
     context 'all decks' do
       it 'returns all the decks' do
         decks = Deck.all
-        expect(decks.count).to be(random_number)
+        expect(decks.count).to be(number_of_decks)
       end
 
       it "returns the user object into each deck" do
@@ -34,6 +34,21 @@ RSpec.describe Api::V1::DecksController, type: :controller do
       it 'responds successfully with an HTTP 200 status code' do
         expect(response).to be_success
         expect(response).to have_http_status(200)
+      end
+
+      context "when deck_ids parameter is sent" do
+        before(:each) do
+          @user = FactoryGirl.create :user
+          number_of_decks.times { FactoryGirl.create :deck, user: @user }
+          process :index, method: :get, params: { deck_ids: @user.deck_ids }
+        end
+
+        it "returns just the decks that belong to the user" do
+          decks_response = json_response[:decks]
+          decks_response.each do |deck_response|
+            expect(deck_response[:user][:email]).to eql @user.email
+          end
+        end
       end
     end
   end

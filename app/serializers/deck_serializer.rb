@@ -1,4 +1,5 @@
 class DeckSerializer < ActiveModel::Serializer
-  attributes :id, :title
-  has_one :user
+  attributes :id, :title, :user_id
+
+  has_one :user, serializer: UserSerializer
 end

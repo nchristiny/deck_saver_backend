@@ -9,7 +9,7 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Active Model Serializers
-gem 'active_model_serializers'
+gem 'active_model_serializers', '0.8.3'
 # API rate limiting and throttling
 gem 'rack-attack'
 
