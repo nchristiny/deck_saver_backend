@@ -24,6 +24,13 @@ RSpec.describe Api::V1::DecksController, type: :controller do
         expect(decks.count).to be(random_number)
       end
 
+      it "returns the user object into each deck" do
+        decks_response = json_response[:decks]
+        decks_response.each do |deck_response|
+          expect(deck_response[:user]).to be_present
+        end
+      end
+
       it 'responds successfully with an HTTP 200 status code' do
         expect(response).to be_success
         expect(response).to have_http_status(200)
@@ -44,6 +51,11 @@ RSpec.describe Api::V1::DecksController, type: :controller do
     it 'responds successfully with an HTTP 200 status code' do
       expect(response).to be_success
       expect(response).to have_http_status(200)
+    end
+
+    it "has the user as a embeded object" do
+      deck_response = json_response[:deck]
+      expect(deck_response[:user][:email]).to eql deck.user.email
     end
   end
 
