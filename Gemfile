@@ -47,6 +47,7 @@ end
 group :test do
   gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', require: false
   gem 'rspec-activemodel-mocks'
+  gem 'database_cleaner'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

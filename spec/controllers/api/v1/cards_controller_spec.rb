@@ -5,10 +5,8 @@ RSpec.describe Api::V1::CardsController, type: :controller do
       random_number = rand(31)
       before(:each) do
         counter = 0
-        user = FactoryGirl.create(:user)
-        deck = FactoryGirl.create(:deck, user_id: user[:id])
         random_number.times do
-          card = FactoryGirl.create(:card, cardId: "test_card#{counter}", deck_id: deck[:id])
+          card = FactoryGirl.create(:card, cardId: "#{counter}_cardId")
           counter += 1
         end
       get :index
@@ -28,15 +26,13 @@ RSpec.describe Api::V1::CardsController, type: :controller do
   end
 
   describe "GET #show" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:deck) { FactoryGirl.create(:deck, title: "Generic but unique Title", user_id: user[:id]) }
-    let(:card) { FactoryGirl.create(:card, cardId: "Equally generic but unique cardId", deck_id: deck[:id]) }
+    let(:card) { FactoryGirl.create(:card, cardId: "Generic but unique cardId") }
     before(:each) do
       get :show, params: { id: card.id }
     end
 
     it 'responds with the correct deck in JSON format' do
-      expect(json_response[:card][:cardId]).to eq "Equally generic but unique cardId"
+      expect(json_response[:card][:cardId]).to eq "Generic but unique cardId"
     end
 
     it 'responds successfully with an HTTP 200 status code' do
