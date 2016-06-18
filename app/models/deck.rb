@@ -19,6 +19,15 @@ class Deck < ApplicationRecord
     p "Added #{card.name} to deck: #{self.title}"
   end
 
+  def remove_card(card)
+    # Currently this removes first instance of a card from deck, when there is
+    # more than one
+    removed_card = DeckCard.find_by(deck_id: self.id, card_id: card.id)
+    removed_card.destroy
+    self.reload
+    p "Removed #{card.name} from deck: #{self.title}"
+  end
+
   # # REFACTOR THIS
   # # Deck.new.build_deck
   # # Filter Deckcards with #find_by_sql if necessary or just for kicks

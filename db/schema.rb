@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20160611165225) do
   create_table "decks", force: :cascade do |t|
     t.string   "title",      default: ""
     t.integer  "user_id"
+    t.text     "cards",      default: [],              array: true
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.index ["user_id"], name: "index_decks_on_user_id", using: :btree
