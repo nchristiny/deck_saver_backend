@@ -26,7 +26,6 @@ module Api::V1
 
     def update
       deck = current_user.decks.find(params[:id])
-      deck.build_deck
       if deck.update(deck_params)
         render json: deck, status: 200, location: [:api, deck]
       else
