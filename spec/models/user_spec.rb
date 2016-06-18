@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, :type => :model do
-  before { @user = FactoryGirl.build(:user) }
+  before(:each) do
+    @user = FactoryGirl.build(:user)
+  end
   subject { @user }
 
   it { should validate_presence_of(:name) }

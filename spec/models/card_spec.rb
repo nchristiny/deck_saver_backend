@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Card, type: :model do
   before(:each) do
-    @user = FactoryGirl.create(:user)
-    @deck = FactoryGirl.create(:deck)
     @card = FactoryGirl.build(:card)
   end
   subject { @card }
