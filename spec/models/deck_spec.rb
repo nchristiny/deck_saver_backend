@@ -10,6 +10,7 @@ RSpec.describe Deck, type: :model do
   it { should validate_uniqueness_of(:title) }
   it { should belong_to :user }
   it { should have_many :cards }
+  it { should have_many :deck_cards }
 
   it { should be_valid }
 end

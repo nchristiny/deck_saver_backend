@@ -25,7 +25,6 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.string :imgGold
       t.string :locale
       t.text :mechanics, array: true, default: []
-      t.integer :deck_id, index: true
       t.timestamps
     end
   end

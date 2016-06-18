@@ -1,5 +1,5 @@
 class Card < ApplicationRecord
-  validates :cardId, uniqueness: true, presence: true
+  validates :cardId, presence: true
 
   has_many :users, through: :saved_cards
   has_many :decks, through: :deck_cards
