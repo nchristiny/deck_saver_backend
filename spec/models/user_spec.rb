@@ -45,7 +45,7 @@ RSpec.describe User, :type => :model do
       decks = @user.decks
       @user.destroy
       decks.each do |deck|
-        expect(Deck.find(deck)).to raise_error ActiveRecord::RecordNotFound
+        expect(Deck.find(deck.id)).to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
