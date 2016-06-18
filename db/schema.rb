@@ -40,10 +40,8 @@ ActiveRecord::Schema.define(version: 20160611165225) do
     t.string   "imgGold"
     t.string   "locale"
     t.text     "mechanics",    default: [],              array: true
-    t.integer  "deck_id"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.index ["deck_id"], name: "index_cards_on_deck_id", using: :btree
   end
 
   create_table "deck_cards", force: :cascade do |t|
@@ -54,10 +52,11 @@ ActiveRecord::Schema.define(version: 20160611165225) do
   end
 
   create_table "decks", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",      default: ""
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "cards",      default: [],              array: true
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["user_id"], name: "index_decks_on_user_id", using: :btree
   end
 

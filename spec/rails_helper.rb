@@ -4,7 +4,9 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+require 'database_cleaner'
 require 'shoulda/matchers'
+require 'support/factory_girl'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -36,7 +38,8 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.include Request::JsonHelpers, type: :controller
-  config.include Request::HeadersHelpers, :type => :controller
+  config.include Request::HeadersHelpers, type: :controller
+
   config.before(:each, type: :controller) do
     include_default_accept_headers
   end

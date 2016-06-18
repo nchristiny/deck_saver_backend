@@ -9,7 +9,6 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   describe "GET #index" do
     number_of_users = 2 + rand(10)
     before(:each) do
-      # Add mulitple users
       number_of_users.times do
         FactoryGirl.create(:user)
       end
@@ -43,8 +42,13 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it "returns the information about a user" do
-        user_response = json_response
-        expect(user_response[:user][:email]).to eql @user.email
+        user_response = json_response[:user]
+        expect(user_response[:email]).to eql @user.email
+      end
+
+      it "has the deck ids as an embeded object" do
+        user_response = json_response[:user]
+        expect(user_response[:deck_ids]).to eql []
       end
 
       it { should respond_with 200 }
@@ -59,8 +63,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it "renders the json representation for the user record just created" do
-        user_response = json_response
-        expect(user_response[:user][:email]).to eql @user_attributes[:email]
+        user_response = json_response[:user]
+        expect(user_response[:email]).to eql @user_attributes[:email]
       end
       it { should respond_with 201 }
     end
@@ -91,8 +95,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
 
       it "renders the json representation for the updated user" do
-        user_response = json_response
-        expect(user_response[:user][:email]).to eql "newmail@example.com"
+        user_response = json_response[:user]
+        expect(user_response[:email]).to eql "newmail@example.com"
       end
       it { should respond_with 200 }
     end

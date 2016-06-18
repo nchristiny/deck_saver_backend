@@ -8,9 +8,11 @@ Rails.application.routes.draw do
       get    'login'   => 'sessions#new'
       post   'login'   => 'sessions#create'
       delete 'logout'  => 'sessions#destroy'
+      resources :users, only: [:index, :show, :new, :create, :update, :destroy] do
+        resources :decks, only: [:create, :update, :destroy]
+      end
+      resources :decks, only: [:index, :show, :new]
       resources :sessions, only: [:create, :destroy]
-      resources :users, only: [:index, :show, :new, :create, :update, :destroy]
-      resources :decks, only: [:index, :show, :new, :create, :update, :destroy]
       resources :cards, only: [:index, :show]
     end
   end

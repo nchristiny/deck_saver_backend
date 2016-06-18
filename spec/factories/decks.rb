@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :deck do
-    title "MyTitle"
+    title { FFaker::Product.product_name }
+    user
   end
 end
