@@ -37,5 +37,7 @@ class Deck < ApplicationRecord
   #     self.deck_cards << DeckCard.new(deck_id: self.id, card_id: card.id)
   #   end
   # end
-
+  # http://guides.rubyonrails.org/association_basics.html#methods-added-by-belongs-to
+  # build_association then save or
+  # create_association!(attributes = {})
 end

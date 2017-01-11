@@ -39,9 +39,11 @@ ActiveRecord::Schema.define(version: 20160611165225) do
     t.string   "img"
     t.string   "imgGold"
     t.string   "locale"
-    t.text     "mechanics",    default: [],              array: true
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.text     "mechanics",       default: [],              array: true
+    t.text     "classes",         default: [],              array: true
+    t.string   "multiClassGroup"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "deck_cards", force: :cascade do |t|

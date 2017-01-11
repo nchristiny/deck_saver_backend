@@ -25,6 +25,8 @@ class CreateCards < ActiveRecord::Migration[5.1]
       t.string :imgGold
       t.string :locale
       t.text :mechanics, array: true, default: []
+      t.text :classes, array: true, default: []
+      t.string :multiClassGroup
       t.timestamps
     end
   end

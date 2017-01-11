@@ -10,7 +10,7 @@ end
 Deck.create!({ title: "Default", user_id: 1 })
 
 ## CARDS
-directory_array = ["lib/assets/cards/basic.json", "lib/assets/cards/blackrock_mountain.json", "lib/assets/cards/classic.json", "lib/assets/cards/goblins_vs_gnomes.json", "lib/assets/cards/naxxramas.json", "lib/assets/cards/promotion.json", "lib/assets/cards/reward.json", "lib/assets/cards/the_grand_tournament.json", "lib/assets/cards/the_league_of_explorers.json", "lib/assets/cards/whispers_of_the_old_gods.json"]
+directory_array = ["lib/assets/cards/basic.json", "lib/assets/cards/blackrock_mountain.json", "lib/assets/cards/classic.json", "lib/assets/cards/goblins_vs_gnomes.json", "lib/assets/cards/naxxramas.json", "lib/assets/cards/promotion.json", "lib/assets/cards/reward.json", "lib/assets/cards/the_grand_tournament.json", "lib/assets/cards/the_league_of_explorers.json", "lib/assets/cards/mean_streets_of_gadgetzan.json", "lib/assets/cards/whispers_of_the_old_gods.json"]
 
 directory_array.each do |dir|
   puts "***********************************************************************"
